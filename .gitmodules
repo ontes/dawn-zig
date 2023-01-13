@@ -1,0 +1,15 @@
+[submodule "dawn"]
+	path = dawn
+	url = https://dawn.googlesource.com/dawn.git
+[submodule "spirv-headers"]
+	path = spirv-headers
+	url = https://github.com/KhronosGroup/SPIRV-Headers.git
+[submodule "spirv-tools"]
+	path = spirv-tools
+	url = https://github.com/KhronosGroup/SPIRV-Tools.git
+[submodule "vulkan-headers"]
+	path = vulkan-headers
+	url = https://github.com/KhronosGroup/Vulkan-Headers.git
+[submodule "abseil-cpp"]
+	path = abseil-cpp
+	url = https://github.com/abseil/abseil-cpp.git
