@@ -30,10 +30,10 @@ pub fn link(step: *std.build.LibExeObjStep, options: DawnOptions, comptime path:
 
     step.linkLibCpp();
 
-    step.addIncludePath(path ++ "include"); // various additional headers
-
-    if (os_tag == .windows)
+    if (os_tag == .windows) {
+        step.addIncludePath(path ++ "windows-sdk/include");
         step.defineCMacro("_Maybenull_", ""); // fix for dxcapi.h
+    }
 
     { // dawn
         step.addIncludePath(path ++ "dawn/include");
@@ -357,6 +357,7 @@ pub fn link(step: *std.build.LibExeObjStep, options: DawnOptions, comptime path:
                 }, c_flags);
             }
             step.addIncludePath(path ++ "vulkan-headers/include");
+            step.addIncludePath(path ++ "vulkan-tools");
         }
 
         step.addCSourceFile(gen_src_path ++ "native/webgpu_dawn_native_proc.cpp", c_flags);
