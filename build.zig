@@ -686,12 +686,12 @@ pub fn link(step: *std.build.LibExeObjStep, options: DawnOptions, comptime path:
     }
 
     { // spirv-tools, NOTE: building only files that Dawn requires
-        step.addIncludePath("spirv-tools");
-        step.addIncludePath("spirv-tools/include");
-        step.addIncludePath("spirv-headers/include");
-        step.addIncludePath("spirv-gen");
+        step.addIncludePath(path ++ "spirv-tools");
+        step.addIncludePath(path ++ "spirv-tools/include");
+        step.addIncludePath(path ++ "spirv-headers/include");
+        step.addIncludePath(path ++ "spirv-gen");
 
-        const src_path = "spirv-tools/source/";
+        const src_path = path ++ "spirv-tools/source/";
         step.addCSourceFiles(&.{
             // src_path ++ "util/bit_vector.cpp",
             src_path ++ "util/parse_number.cpp",
@@ -882,9 +882,9 @@ pub fn link(step: *std.build.LibExeObjStep, options: DawnOptions, comptime path:
     }
 
     { // abseil-cpp, NOTE: building only files that Dawn requires
-        step.addIncludePath("abseil-cpp");
+        step.addIncludePath(path ++ "abseil-cpp");
 
-        const src_path = "abseil-cpp/absl/";
+        const src_path = path ++ "abseil-cpp/absl/";
         step.addCSourceFiles(&.{
             src_path ++ "strings/ascii.cc",
             src_path ++ "strings/charconv.cc",
