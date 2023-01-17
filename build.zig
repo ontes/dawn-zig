@@ -910,17 +910,23 @@ pub fn build(b: *std.build.Builder) void {
     const build_mode = b.standardReleaseOptions();
     const options = DawnOptions.standard(b, target.os_tag orelse @import("builtin").target.os.tag);
 
+    const static_lib = b.addStaticLibrary("webgpu_dawn", null);
+    static_lib.setTarget(target);
+    static_lib.setBuildMode(build_mode);
+    link(static_lib, options, "");
+    static_lib.install(); // makes static library default
+
     const shared_lib = b.addSharedLibrary("webgpu_dawn", null, .unversioned);
     shared_lib.setTarget(target);
     shared_lib.setBuildMode(build_mode);
     link(shared_lib, options, "");
     shared_lib.defineCMacro("WGPU_IMPLEMENTATION", null);
     shared_lib.defineCMacro("WGPU_SHARED_LIBRARY", null);
-    shared_lib.install();
+    b.step("shared", "Build shared library").dependOn(&b.addInstallArtifact(shared_lib).step);
 
     const tests = b.addTest("webgpu.zig");
     tests.setTarget(target);
     tests.setBuildMode(build_mode);
-    tests.linkLibrary(shared_lib);
+    tests.linkLibrary(static_lib);
     b.step("test", "Run library tests").dependOn(&tests.step);
 }
